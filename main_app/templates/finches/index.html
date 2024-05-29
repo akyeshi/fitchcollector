@@ -4,6 +4,7 @@
 <h1>Finch List</h1>
 
 {% for finch in finches %}
+<a href="{% url 'detail' finch.id %}">
   <div>
     <hr>
     <p>Name: {{ finch.name }} </p>
@@ -13,7 +14,7 @@
     <p>Diet: {{ finch.diet }} </p>
     <p>Conservation Status: {{ finch.conservation_status }} </p>
   </div>
-
+</a>
 
 {% endfor %}
 
