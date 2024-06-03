@@ -3,6 +3,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<!------------------------ Finch Detail  ------------------------->
 <h1>Finch Detail</h1>
 <div>
   <hr>
@@ -17,6 +18,56 @@
   <a href="{% url 'finches_update' finch.id %}">Edit</a>
   <a href="{% url 'finches_delete' finch.id %}">Delete</a>
 </div>
+<hr />
 
+<!------------------------ Feeding Form  ------------------------->
+<div class="col s6">
+  <!-- New Markup Below -->
+  <form action="{% url 'add_feeding' finch.id %}" method="POST">
+    {% csrf_token %}
+    <!-- Render the inputs -->
+    {{ feeding_form.as_p }}
+    <input type="submit" class="btn" value="Add Feeding">
+  </form>
+  <!-- New Markup Above -->
+
+  <!------------------------ conditional rending of text  ------------------------->
+  <br>
+    {% if finch.fed_for_today %}
+      <div class="card-panel teal-text center-align">{{finch.name}} has been fed all meals for today</div>
+    {% else %}
+      <div class="card-panel red-text center-align">{{finch.name}} might be hungry</div>
+    {% endif %}
+
+  <!--------------- Feeding displayed after form submission ---------------->
+  <table class="striped">
+    <thead>
+      <tr><th>Date</th><th>Meal</th></tr>
+    </thead>
+    <tbody>
+      {% for feeding in finch.feeding_set.all %}
+        <tr>
+          <td>{{feeding.date}}</td>
+          <td>{{feeding.get_meal_display}}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<!--------- Materialize CDN script to enable date picker & select input functionalities ---------->
+<script>
+  const dateEl = document.getElementById('id_date');
+  // M is Materialize's global variable
+  M.Datepicker.init(dateEl, {
+    format: 'yyyy-mm-dd',
+    defaultDate: new Date(),
+    setDefaultDate: true,
+    autoClose: true
+  });
+  // add additional JS to initialize select below
+  const selectEl = document.getElementById('id_meal');
+  M.FormSelect.init(selectEl);
+</script>
 
 {% endblock %}
