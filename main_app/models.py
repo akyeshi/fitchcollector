@@ -5,6 +5,10 @@ from datetime import date
 # Create your models here.
 
 
+class Toy(models.Model): 
+    name = models.CharField(max_length=100)
+    color = models.CharField(max_length=100)
+
 class Finch(models.Model):
     name = models.CharField(max_length=100)
     species = models.CharField(max_length=100)
@@ -12,6 +16,8 @@ class Finch(models.Model):
     habitat = models.CharField(max_length=100)
     diet = models.CharField(max_length=100)
     conservation_status = models.CharField(max_length=100)
+    # Add the M:M relationship
+    toys = models.ManyToManyField(Toy)
 
     def __str__(self):
         return f'{self.name} ({self.id})'
@@ -47,5 +53,5 @@ class Feeding(models.Model):
     
     # change the default sort
     class Meta:
-      ordering = ['-date']
+        ordering = ['-date']
 
