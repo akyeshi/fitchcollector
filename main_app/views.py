@@ -43,14 +43,13 @@ def finches_detail(request, finch_id):
 class FinchCreate(CreateView):
     model = Finch
     # fields = '__all__' (we need to exclude 'toys' attribute holding a Finch's toys)
-    fields = ['name', 'species', 'description',
-              'habitat', 'diet', 'conservation_status']
+    fields = ['name', 'species', 'description', 'habitat', 'diet', 'conservation_status']
     # success_url = '/cats/{id}'  # add a 'success_url' class attribute to the CBV
 
 
 class FinchUpdate(UpdateView):
     model = Finch
-    fields = '__all__'
+    fields = ['name', 'species', 'description', 'habitat', 'diet', 'conservation_status']
 
 
 class FinchDelete(DeleteView):

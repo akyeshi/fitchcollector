@@ -35,7 +35,7 @@ class Finch(models.Model):
         return reverse('detail', kwargs={'finch_id': self.id})
 
     def fed_for_today(self):
-        return self.feeding_set.filter(date=date.today()).count() == len(MEALS)
+        return self.feeding_set.filter(date=date.today()).count() >= len(MEALS)
 
 
 MEALS = (
